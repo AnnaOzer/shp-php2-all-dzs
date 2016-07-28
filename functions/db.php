@@ -34,3 +34,8 @@ function DBQuery($sql)
     
     return $ret;
 }
+
+function DBExec($sql)
+{
+    return $res = mysqli_query(DBConnect(), $sql);
+}
