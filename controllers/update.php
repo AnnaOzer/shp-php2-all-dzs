@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once '../models/news.php';
+require_once '../models/newsModel.php';
 
 if(!empty($_POST)) {
 
@@ -13,7 +13,7 @@ if(!empty($_POST)) {
             
             $id = (int)$_POST['id'];
 
-            $_SESSION['message'] = (News_updateOne($article, $id)) ? 'Обновлено' : 'Что-то пошло не так';
+            $_SESSION['message'] = ((new newsModel)->update($article, $id)) ? 'Обновлено' : 'Что-то пошло не так';
         }
 
     }

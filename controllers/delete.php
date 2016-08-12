@@ -1,9 +1,13 @@
 <?php
 session_start();
-require_once '../models/news.php';
+require_once '../models/newsModel.php';
 
 $id=(isset($_GET['id'])) ? $_GET['id'] : 0;
 
-$_SESSION['message'] = (News_deleteOne($id)) ? 'Удалено' : 'Что-то пошло не так';
+if( !is_null( (new newsModel)->getOne($id) )  ) {
+    $_SESSION['message'] = (new newsModel)->delete($id) ? 'Удалено' : 'Что-то пошло не так';
+} else {
+    $_SESSION['message'] = 'Попытка удалить несуществующую новость';
+}
 
 header("Location:../index.php");

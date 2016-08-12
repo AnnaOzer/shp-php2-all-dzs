@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once '../models/news.php';
+require_once '../models/newsModel.php';
 
 if(!empty($_POST)) {
     if(!empty($_POST['text'])) {
@@ -9,7 +9,7 @@ if(!empty($_POST)) {
         $article['title'] = isset($_POST['title']) ? $_POST['title'] : '***';
         $article['text'] = $_POST['text'];
         
-        $_SESSION['message'] = (News_addOne($article)) ? 'Добавлено' : 'Что-то пошло не так';
+        $_SESSION['message'] = ( (new newsModel)->add($article) )  ? 'Добавлено' : 'Что-то пошло не так';
     }
 }
 
