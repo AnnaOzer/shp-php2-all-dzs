@@ -1,3 +1,9 @@
+<?php
+/*
+  * @var array $news Список всех новостей
+  */
+?>
+
 <html>
 <head>
     <title>Новости</title>

@@ -1,4 +1,7 @@
 <?php
 require_once '../models/newsModel.php';
+require_once __DIR__ . '/../classes/View.php';
 
-include '../view/form_add.php';
+$view = new View;
+
+$view->display('form_add');
