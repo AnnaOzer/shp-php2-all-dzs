@@ -1,3 +1,9 @@
+<?php
+/*
+  * @var array $article Одна новость
+  */
+?>
+
 <html>
 <head>
     <title>Новости</title>
