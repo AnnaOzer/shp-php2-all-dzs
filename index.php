@@ -1,16 +1,13 @@
 <?php
 session_start();
 
-require_once __DIR__ . '/models/newsModel.php';
-require_once __DIR__ . '/classes/View.php';
+require '/boot.php';
 
-$view = new View();
-$view->news = (new newsModel)->getAll();
+// роутер
+$route = $_GET['r'];
+$routeParts = explode('/', $route);
+$controllerClassName = ucfirst($routeParts[0]) . 'Controller';
 
-if(isset($_SESSION['message'])) {
-    echo $_SESSION['message'];
-    unset ($_SESSION['message']);
-    echo '<br>';
-}
-
-$view->display('index');
+// фронтконтроллер
+$controller = new $controllerClassName;
+$controller->action($routeParts[1]);
