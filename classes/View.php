@@ -26,7 +26,7 @@ extends Storage
         echo $this->render($template);
     }
     
-    public function __construct($path = __DIR__ .'/../view')
+    public function __construct($path = __DIR__ . '/../view')
     {
         $this->path = $path;
     }

@@ -6,26 +6,34 @@ class NewsController
 {
     protected function actionAll()
     {
-        $view = new View();
-        $view->news = (new newsModel)->getAll();
+        try {
+            $view = new View();
 
-        if (isset($_SESSION['message'])) {
-            echo $_SESSION['message'];
-            unset ($_SESSION['message']);
-            echo '<br>';
+            $view->news = News::findAll();
+
+            if (isset($_SESSION['message'])) {
+                echo $_SESSION['message'];
+                unset ($_SESSION['message']);
+                echo '<br>';
+            }
+
+            $view->display('index');
+        } catch (Exception $e) {
+            throw new ControllerException('Не удается показать все новости: ' . $e->getMessage());
         }
-
-        $view->display('index');
     }
 
     protected function actionOne()
     {
+        try {
+            $id = (isset($_GET['id'])) ? (int)$_GET['id'] : 1;
 
-        $id = (isset($_GET['id'])) ? (int)$_GET['id'] : 1;
-        
-        $view = new View();
-        $view->article = !is_null( (new newsModel)->getOne($id) ) ? (new newsModel)->getOne($id) : (new newsModel)->getOne(1);
-        $view->display('one');
+            $view = new View();
+            $view->article = !is_null((new News)->findById($id)) ? (new News)->findById($id) : (new News)->findById(1);
+            $view->display('one');
+        } catch (Exception $e) {
+            throw new ControllerException('Не удается показать эту новость: ' . $e->getMessage());
+        }
     }
     
     protected function actionAdder()

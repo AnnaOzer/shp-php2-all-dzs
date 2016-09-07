@@ -11,9 +11,9 @@
 <body>
 
     <article>
-        <h1><?=$article['title']; ?></h1>
-        <div><?=$article['text']; ?></div>
-        <a href="/?r=news/updater&id=<?=$article['id'];?>">Редактировать</a>
+        <h1><?=$article->title; ?></h1>
+        <div><?=$article->text; ?></div>
+        <a href="/?r=news/updater&id=<?=$article->id; ?>">Редактировать</a>
     </article>
     
 </body>
