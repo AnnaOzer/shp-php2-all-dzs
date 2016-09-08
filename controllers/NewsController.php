@@ -47,21 +47,26 @@ class NewsController
         $id=(isset($_GET['id'])) ? $_GET['id'] : 1;
 
         $view = new View();
-        $view->article = ( new newsModel() )->getOne($id);
+        $view->article = News::findById($id);
         $view->display('form_update');
 
     }
 
     protected function actionAdd()
     {
-        if(!empty($_POST)) {
-            if(!empty($_POST['text'])) {
-                $article=[];
-                $article['title'] = isset($_POST['title']) ? $_POST['title'] : '***';
-                $article['text'] = $_POST['text'];
+        try {
 
-                $_SESSION['message'] = ( (new newsModel)->add($article) )  ? 'Добавлено' : 'Что-то пошло не так';
+            if (!empty($_POST)) {
+                if (!empty($_POST['text'])) {
+                    $article = new News();
+                    $article->title = isset($_POST['title']) ? $_POST['title'] : '***';
+                    $article->text = $_POST['text'];
+                    $article->save();
+                    $_SESSION['message'] = 'Новость добавлена';
+                }
             }
+        } catch (Exception $e) {
+            throw new Exception('Не удается добавить новость');
         }
 
         header("Location:/?r=news/all");
@@ -69,22 +74,26 @@ class NewsController
 
     protected function actionUpdate()
     {
-        if(!empty($_POST)) {
+        try {
+            if (!empty($_POST)) {
 
-            if(!empty($_POST['id'])) {
-
-                if (!empty($_POST['text'])) {
-                    $article = [];
-
-
-                    $article['title'] = isset($_POST['title']) ? $_POST['title'] : '***';
-                    $article['text'] = $_POST['text'];
-
+                if (!empty($_POST['id'])) {
                     $id = (int)$_POST['id'];
+                    if (!empty($_POST['text'])) {
 
-                    $_SESSION['message'] = ((new newsModel)->update($article, $id)) ? 'Обновлено' : 'Что-то пошло не так';
+                        $article = News::findById($id);
+
+                        $article->title = isset($_POST['title']) ? $_POST['title'] : '***';
+                        $article->text = $_POST['text'];
+
+                        $article->save();
+
+                        $_SESSION['message'] = 'Новость обновлена';
+                    }
                 }
             }
+        } catch (Exception $e) {
+            throw new Exception('Не удается обновить новость');
         }
 
         header("Location:/?r=news/all");
@@ -93,11 +102,13 @@ class NewsController
     protected function actionDelete()
     {
         $id=(isset($_GET['id'])) ? $_GET['id'] : 0;
+        $articleToDelete = News::findById($id);
 
-        if( !is_null( (new newsModel)->getOne($id) )  ) {
-            $_SESSION['message'] = (new newsModel)->delete($id) ? 'Удалено' : 'Что-то пошло не так';
+        if( isset($articleToDelete->id)  ) {
+            $articleToDelete->delete();
+            $_SESSION['message'] = 'Удалено';
         } else {
-            $_SESSION['message'] = 'Попытка удалить несуществующую новость';
+            throw new Exception('Попытка удалить несуществующую новость');
         }
 
         header("Location:/?r=news/all");

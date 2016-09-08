@@ -4,7 +4,7 @@ function __autoload($class)
 {
     // require '/classes/' . $class . '.php';
     
-    $folders = ['classes', 'models', 'functions'];
+    $folders = ['classes', 'models',  'controllers', 'exceptions'];
 
     foreach($folders as $folder) {
         
@@ -20,4 +20,3 @@ function __autoload($class)
     
 }
 
-//require_once '/models/newsModel.php';
