@@ -1,11 +1,8 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Пользователь
- * Date: 02.09.2016
- * Time: 14:01
- */
+namespace App\Classes;
+use App\Exceptions\DbException;
+
 class Connection
 {
     protected $dbh;
@@ -25,8 +22,8 @@ class Connection
         try {
             $config = $this->getConfig();
             $dsn = $config['db']['drive'] . ':dbname=' . $config['db']['dbname'] . ';host=' . $config['db']['host'];
-            $this->dbh = new PDO($dsn, $config['db']['user'], $config['db']['password']);
-        } catch (PDOException $e) {
+            $this->dbh = new \PDO($dsn, $config['db']['user'], $config['db']['password']);
+        } catch (\PDOException $e) {
             throw new DbException('Нет соединения с базой данных: ' . $e->getMessage());
         }
 

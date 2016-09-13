@@ -1,0 +1,9 @@
+{
+    "require": {
+      "monolog/monolog": "1.2.*",
+      "phpmailer/phpmailer": "v5.2.16",
+      "twig/twig": "v1.24.2",
+      "phpunit/php-timer": "1.0.8",
+      "league/oauth2-google" :"1.0.1"
+    }
+}

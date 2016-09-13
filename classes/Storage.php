@@ -1,7 +1,8 @@
 <?php
 
+namespace App\Classes;
 class Storage
-    implements Countable, Iterator
+    implements \Countable, \Iterator
 {
     private  $__data = [];
 

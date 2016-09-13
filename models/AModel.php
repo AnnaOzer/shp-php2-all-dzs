@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Models;
+use App\Classes\Connection;
+use App\Exceptions\DbException;
+use App\Exceptions\ModelException;
 
 abstract class AModel
 
@@ -30,10 +34,10 @@ abstract class AModel
             $sql = "SELECT * FROM " . static::$table;
             $dbh = static::getConnection();
             $sth = $dbh->prepare($sql);
-            $sth->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+            $sth->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
             $sth->execute();
             return $sth->fetchAll();
-        } catch (PDOException $e2) {
+        } catch (\PDOException $e2) {
             throw new ModelException('Не удается получить результат SQL запроса: ' . $e2->getMessage());
         }
     }
@@ -44,10 +48,10 @@ abstract class AModel
             $sql = "SELECT * FROM " . static::$table . " WHERE id=:id";
             $dbh = static::getConnection();
             $sth = $dbh->prepare($sql);
-            $sth->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+            $sth->setFetchMode(\PDO::FETCH_CLASS, get_called_class());
             $sth->execute([':id' => $id]);
             return $sth->fetch();
-        } catch (PDOException $e3) {
+        } catch (\PDOException $e3) {
             throw new ModelException('Не удается получить результат SQL запроса: ' . $e3->getMessage());
         }
     }
@@ -58,7 +62,7 @@ abstract class AModel
             $dbh = static::getConnection();
             $sth = $dbh->prepare($sql);
             return $sth->execute($params);
-        } catch (PDOException $e4) {
+        } catch (\PDOException $e4) {
             throw new ModelException('Не удается получить результат SQL запроса: ' . $e4->getMessage());
         }
     }
@@ -124,7 +128,7 @@ abstract class AModel
             $sth = $dbh->prepare($sql);
             $sth->execute($values);
         } else {
-            throw new Exception('Попытка удалить несуществующую запись');
+            throw new \Exception('Попытка удалить несуществующую запись');
         }
     }
     

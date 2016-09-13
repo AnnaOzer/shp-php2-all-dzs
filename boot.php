@@ -1,22 +1,15 @@
 <?php
 
-function __autoload($class)
+require 'vendor/autoload.php';
+
+spl_autoload_register("__MyAutoload");
+
+function __MyAutoload($class)
 {
-    // require '/classes/' . $class . '.php';
-    
-    $folders = ['classes', 'models',  'controllers', 'exceptions'];
-
-    foreach($folders as $folder) {
-        
-        $filePath = __DIR__. '/' . $folder . '/' . $class . '.php';
-        
-        if(is_file($filePath)) {
-
-            require $filePath;
-            break;
-        }
-    }
-
-    
+    $namespaces = explode('\\', $class);
+    array_shift($namespaces);
+    is_readable(__DIR__ . '/' . implode('/', $namespaces) . '.php')
+        ? require __DIR__ . '/' . implode('/', $namespaces) . '.php'
+        : false;
 }
 

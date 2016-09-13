@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Classes;
+
 class View
 extends Storage
 {

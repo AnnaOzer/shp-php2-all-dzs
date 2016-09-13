@@ -1,5 +1,10 @@
 <?php
 
+namespace App\Controllers;
+
+use App\Classes\View;
+use App\Models\News;
+
 
 class NewsController
     extends AController
@@ -69,7 +74,7 @@ class NewsController
             throw new Exception('Не удается добавить новость');
         }
 
-        header("Location:/?r=news/all");
+        header("Location:/news/all");
     }
 
     protected function actionUpdate()
@@ -96,7 +101,7 @@ class NewsController
             throw new Exception('Не удается обновить новость');
         }
 
-        header("Location:/?r=news/all");
+        header("Location:/news/all");
     }
 
     protected function actionDelete()
@@ -111,7 +116,7 @@ class NewsController
             throw new Exception('Попытка удалить несуществующую новость');
         }
 
-        header("Location:/?r=news/all");
+        header("Location:/news/all");
     }
 
 }

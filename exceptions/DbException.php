@@ -1,13 +1,9 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Пользователь
- * Date: 07.09.2016
- * Time: 15:10
- */
+namespace App\Exceptions;
+
 class DbException
-extends Exception
+extends \Exception
 {
 
 }
